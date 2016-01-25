@@ -39,9 +39,26 @@
 
 	}
 
+	function excludeIntersect( object ) {
+
+		if ( object.visible === false ) return true;
+
+		if ( object.el && object.el.tagName == "A-SKY" ) return true;
+
+		if ( object.el && object.el.getAttribute('visible') === "false" ) return true;
+
+		return false;
+	}
+
 	function intersectObject( object, raycaster, intersects, recursive ) {
 
-		if ( object.visible === false ) return;
+		if ( excludeIntersect( object ) ) return;
+
+		for ( var i = 0, l = intersects.length; i < l; i ++ ) {
+
+			if ( excludeIntersect( intersects[ i ].object ) ) delete intersects[ i ];
+
+		}
 
 		object.raycast( raycaster, intersects );
 
@@ -99,7 +116,15 @@
 
 			var intersects = [];
 
+			if ( excludeIntersect( object ) ) return;
+
 			intersectObject( object, this, intersects, recursive );
+
+			for ( var i = 0, l = intersects.length; i < l; i ++ ) {
+
+				if ( excludeIntersect( intersects[ i ].object.visible ) ) delete intersects[ i ];
+
+			}
 
 			intersects.sort( ascSort );
 
@@ -121,6 +146,12 @@
 			for ( var i = 0, l = objects.length; i < l; i ++ ) {
 
 				intersectObject( objects[ i ], this, intersects, recursive );
+
+			}
+
+			for ( var i = 0, l = intersects.length; i < l; i ++ ) {
+
+				if ( excludeIntersect( intersects[ i ].object.visible ) ) delete intersects[ i ];
 
 			}
 
