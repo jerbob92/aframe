@@ -122,7 +122,7 @@
 
 			for ( var i = 0, l = intersects.length; i < l; i ++ ) {
 
-				if ( excludeIntersect( intersects[ i ].object.visible ) ) delete intersects[ i ];
+				if ( excludeIntersect( intersects[ i ].object ) ) delete intersects[ i ];
 
 			}
 
@@ -151,7 +151,7 @@
 
 			for ( var i = 0, l = intersects.length; i < l; i ++ ) {
 
-				if ( excludeIntersect( intersects[ i ].object.visible ) ) delete intersects[ i ];
+				if ( excludeIntersect( intersects[ i ].object ) ) delete intersects[ i ];
 
 			}
 
